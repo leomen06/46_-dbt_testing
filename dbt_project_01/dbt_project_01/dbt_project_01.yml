@@ -1,0 +1,48 @@
+# dbt project configuration file
+
+# Name your project!
+name: 'dbt_project_01'
+version: '1.0.0'
+config-version: 2
+
+# Profile used by dbt for this project
+profile: 'dbt_project_01'
+
+# Locations of different file types
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+# Directories to clean with `dbt clean`
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+# Macros (reusable functions)
+macros:
+  convertir_a_mayusculas:
+    # Description of the macro
+    desc: Convierte un texto a mayúscula.
+    # SQL code for the macro
+    sql: |-
+      SELECT UPPER({{ value }});
+  validar_formato_fecha:
+    desc: Valida si un valor es una fecha en formato YYYY-MM-DD.
+    sql: |-
+      SELECT CASE WHEN TO_DATE({{ value }}) IS NOT NULL THEN TRUE ELSE FALSE END AS es_fecha_valida;
+
+# Models configuration
+models:
+  - name: modelo_ejemplo  # Specific model name
+    example:  # Indicates the model belongs to "example" directory
+      # Inherited target: table (from models section)
+      sources:
+        - name: datos_de_origen
+          path: data/datos.csv
+          format: csv
+      sql: |-
+        SELECT id, {{ convertir_a_mayusculas(first_name) }} AS first_name_cap
+        FROM {{ source('datos_de_origen') }};

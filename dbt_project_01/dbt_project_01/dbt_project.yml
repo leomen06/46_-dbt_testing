@@ -1,14 +1,17 @@
-# dbt project configuration file
 
-# Name your project!
+# Name your project! Project names should contain only lowercase characters
+# and underscores. A good package name should reflect your organization's
+# name or the intended use of these models
 name: 'dbt_project_01'
 version: '1.0.0'
 config-version: 2
 
-# Profile used by dbt for this project
+# This setting configures which "profile" dbt uses for this project.
 profile: 'dbt_project_01'
 
-# Locations of different file types
+# These configurations specify where dbt should look for different types of files.
+# The `model-paths` config, for example, states that models in this project can be
+# found in the "models/" directory. You probably won't need to change these!
 model-paths: ["models"]
 analysis-paths: ["analyses"]
 test-paths: ["tests"]
@@ -16,33 +19,23 @@ seed-paths: ["seeds"]
 macro-paths: ["macros"]
 snapshot-paths: ["snapshots"]
 
-# Directories to clean with `dbt clean`
-clean-targets:
+clean-targets:         # directories to be removed by `dbt clean`
   - "target"
   - "dbt_packages"
 
-# Macros (reusable functions)
-macros:
-  convertir_a_mayusculas:
-    # Description of the macro
-    desc: Convierte un texto a mayúscula.
-    # SQL code for the macro
-    sql: |-
-      SELECT UPPER({{ value }});
-  validar_formato_fecha:
-    desc: Valida si un valor es una fecha en formato YYYY-MM-DD.
-    sql: |-
-      SELECT CASE WHEN TO_DATE({{ value }}) IS NOT NULL THEN TRUE ELSE FALSE END AS es_fecha_valida;
 
-# Models configuration
+# Configuring models
+# Full documentation: https://docs.getdbt.com/docs/configuring-models
+
+# In this example config, we tell dbt to build all models in the example/
+# directory as views. These settings can be overridden in the individual model
+# files using the `{{ config(...) }}` macro.
 models:
-  - name: modelo_ejemplo  # Specific model name
-    example:  # Indicates the model belongs to "example" directory
-      # Inherited target: table (from models section)
+  dbt_project_01:
+    # Config indicated by + and applies to all files under models/example/
+    example:
+      +materialized: table
       sources:
         - name: datos_de_origen
           path: data/datos.csv
           format: csv
-      sql: |-
-        SELECT id, {{ convertir_a_mayusculas(first_name) }} AS first_name_cap
-        FROM {{ source('datos_de_origen') }};
