@@ -1,0 +1,8 @@
+packages:
+- package: brooklyn-data/dbt_artifacts
+  version: 2.6.2
+- package: calogica/dbt_expectations
+  version: 0.10.3
+- package: calogica/dbt_date
+  version: 0.10.1
+sha1_hash: ad47b3353d3fb0f04a3e35cda8c28baf11be7baf

@@ -39,3 +39,7 @@ models:
         - name: datos_de_origen
           path: data/datos.csv
           format: csv
+    vars:
+      'dbt_date:time_zone': 'America/Los_Angeles'
+    on-run-end:
+      - "{{ dbt_artifacts.upload_results(results) }}"

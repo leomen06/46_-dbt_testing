@@ -1,0 +1,5 @@
+packages:
+  - package: brooklyn-data/dbt_artifacts
+    version: 2.6.2
+  - package: calogica/dbt_expectations
+    version: 0.10.3
