@@ -1,0 +1,23 @@
+models:
+  - name: dev_main_file_binary_ts
+    columns:
+    - name: file_content
+      tests:
+        - generic_not_null
+        - generic_regex:
+            regex: '^binary_content_\d{2}$'
+    - name: file_path
+      tests:
+        - generic_not_null
+        - generic_regex:
+            regex: '^abfss:\/\/webmethods-[a-z0-9@\.]+dfs\.core\.windows\.net\/mustang\/regression\/\d{4}\/\d{2}\/\d{2}\/tns_mustang_regression_\d{9}_\d{14}$'
+    - name: file_name
+      tests:
+        - generic_not_null
+        - generic_regex:
+            regex: '^tns_mustang_regression_\d{9}_\d{14}\.xml$'
+    - name: modification_time
+      tests:
+        - generic_not_null
+        - generic_regex:
+            regex: '^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$'

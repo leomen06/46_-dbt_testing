@@ -46,3 +46,6 @@ models:
       sql: |-
         SELECT id, {{ convertir_a_mayusculas(first_name) }} AS first_name_cap
         FROM {{ source('datos_de_origen') }};
+
+    on-run-end:
+      - "{{ dbt_artifacts.upload_results(results) }}"
