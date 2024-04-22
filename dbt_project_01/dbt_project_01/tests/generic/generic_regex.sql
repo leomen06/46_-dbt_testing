@@ -4,5 +4,5 @@ generic_regex.sql
     select {{ column_name }}
     from {{ model }}
     where not {{ column_name }} ~* '{{ regex }}'
-
+    
 {% endtest %}
