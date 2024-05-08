@@ -1,5 +1,5 @@
 generic_regex.sql
-{% test generic_regex(model, column_name, regex) %}
+{% test generic_regex(model, column_name, regex, tags) %}
 
     select {{ column_name }}
     from {{ model }}

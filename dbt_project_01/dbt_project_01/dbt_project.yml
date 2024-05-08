@@ -39,10 +39,22 @@ models:
         - name: datos_de_origen
           path: data/datos.csv
           format: csv
+  #To disable dim, fact, and stg tables
+  dbt_artifacts:
+    +enabled: false
+    sources:
+      +enabled: true
+    #variables
     vars:
       'dbt_date:time_zone': 'America/Los_Angeles'
+      dbt_artifacts_exclude_all_results: true
 tests:
+#To create a new audit schema with the fail values
   dbt_project_01:
     +store_failures_as: table
 on-run-end:
   - "{{ dbt_artifacts.upload_results(results) }}"
+#To create new columns "env_vars", and "dbt_vars" within "invocations" table. 
+vars:
+  env_vars: ['USCDP_ENVIRONMENT_NAME']
+  dbt_vars: ['dbt_date:time_zone']

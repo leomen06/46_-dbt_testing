@@ -1,6 +1,5 @@
 # !/bin/bash/
-#program for access to posgres psql bash shell
-#author: LLM mendezleonardom@gmail.com
+#program for create a postgres container and/or access to postgres psql bash shell
 
 container_name=""
 start_container=""
@@ -17,7 +16,7 @@ read -n1 -p "Need to run a NEW postgres container (y/n):" opt_y_n
 echo -e "\n"
 
 if [ $opt_y_n == "n" ]; then
-        read -p "Enter the container name: " container_name
+        read -p "Enter your container name: " container_name
         read -n1 -p "Start the container (y/n): " start_container
         echo -e "\n"
         if [ $start_container == "y" ]; then 

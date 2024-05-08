@@ -2,21 +2,32 @@ models:
   - name: dev_main_file_binary_ts
     columns:
     - name: file_content
+      description: "{{ doc('file_content') }}"
       tests:
         - generic_not_null
         - generic_regex:
             regex: 'binary_content_\d{2}'
+            #"severity" impact in "test_executions" Table creating the "status" column.
+            severity: warn
+            tags: 'quarantine'
     - name: file_path
+      description: file_path means, the path to store information.
       tests:
         - generic_not_null
         - generic_regex:
             regex: 'abfss:\/\/webmethods-[a-z0-9@\.]+dfs\.core\.windows\.net\/mustang\/regression\/\d{4}\/\d{2}\/\d{2}\/tns_mustang_regression_\d{9}_\d{14}'
+            severity: warn
+            tags: 'quarantine'
     - name: file_name
+      description: "{{ doc('file_name') }}"
       tests:
         - generic_not_null
         - generic_regex:
             regex: 'tns_mustang_regression_\d{9}_\d{14}\.xml'
+            severity: warn
+            tags: 'quarantine'
     - name: modification_time
+      description: "{{ doc('modification_time') }}"
       tests:
         - generic_not_null
         - generic_regex:
